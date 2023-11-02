@@ -2,7 +2,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Earth3 {
+public class Earth4 {
     
     public static void main(String[] args){
 
@@ -10,6 +10,7 @@ public class Earth3 {
 
         ArrayList<Person> population = new ArrayList<>();
         ArrayList<Person> itemsToRemove = new ArrayList<>();
+        ArrayList<Person> itemsToAdd = new ArrayList<>();
         Random rand = new Random();
         //LinkedList<Person> population = new LinkedList<Person>();
         int year = 0;
@@ -31,26 +32,28 @@ public class Earth3 {
 
 
         do{
+            itemsToRemove.clear();
+            itemsToAdd.clear();
+            peopleBorn = 0;
+            peopleDead = 0;
+
             startingPopulationSize = population.size();
             worldMoney = BigInteger.valueOf(0);
-            for(int i = 0; i < startingPopulationSize; i++) { //Multiple Children a year
-                thisPerson = i;
+
+            for (Person person : population) {
                 //System.out.println(thisPerson);
 
-                thisPerson2 = rand.nextInt(startingPopulationSize);
+                Person person2 = population.get(rand.nextInt(startingPopulationSize));
                 //System.out.println(thisPerson2);
-                if (population.get(thisPerson).haveAChild(population.get(thisPerson2).age, population.get(thisPerson2).sex, population.get(thisPerson2).pregnant)) {
-                    population.get(thisPerson).becomePregnant();
-                    population.get(thisPerson2).becomePregnant();
-                    Person person = new Person(year);
-                    population.add(person);
+                if (person.haveAChild(person2.age, person2.sex, person2.pregnant)) {
+                    person.becomePregnant();
+                    person2.becomePregnant();
+                    Person child = new Person(year);
+                    itemsToAdd.add(child);
                     peopleBorn ++;
                 }
 
 
-            }
-
-            for (Person person : population) {
                 //System.out.println(population.get(i).name + " age: " + population.get(i).age + " sex: " + population.get(i).sex + " year born: " + population.get(i).yearBorn);
                 if(person.chanceOfDeath() || (person.getMoney() < 0 && person.getAge() >= 18)){
                     peopleDead ++;
@@ -75,6 +78,7 @@ public class Earth3 {
             }
 
             population.removeAll(itemsToRemove);
+            population.addAll(itemsToAdd);
 
             if(year % 50 == 0){
                 System.out.println();
