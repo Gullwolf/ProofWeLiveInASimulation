@@ -6,18 +6,15 @@ public class Earth4 {
     
     public static void main(String[] args){
 
-        int thisPerson, thisPerson2;
-
         ArrayList<Person> population = new ArrayList<>();
         ArrayList<Person> itemsToRemove = new ArrayList<>();
         ArrayList<Person> itemsToAdd = new ArrayList<>();
         Random rand = new Random();
-        //LinkedList<Person> population = new LinkedList<Person>();
         int year = 0;
-        int peopleBorn = 0;
-        int peopleDead = 0;
-        int startingPopulationSize = 0;
-        BigInteger worldMoney = BigInteger.valueOf(0);
+        int peopleBorn;
+        int peopleDead;
+        int startingPopulationSize;
+        BigInteger worldMoney;
 
         for(int s = 0; s <= 1; s++){
             Person person = new Person(year);
@@ -41,10 +38,9 @@ public class Earth4 {
             worldMoney = BigInteger.valueOf(0);
 
             for (Person person : population) {
-                //System.out.println(thisPerson);
 
                 Person person2 = population.get(rand.nextInt(startingPopulationSize));
-                //System.out.println(thisPerson2);
+
                 if (person.haveAChild(person2.age, person2.sex, person2.pregnant)) {
                     person.becomePregnant();
                     person2.becomePregnant();
@@ -53,9 +49,7 @@ public class Earth4 {
                     peopleBorn ++;
                 }
 
-
-                //System.out.println(population.get(i).name + " age: " + population.get(i).age + " sex: " + population.get(i).sex + " year born: " + population.get(i).yearBorn);
-                if(person.chanceOfDeath() || (person.getMoney() < 0 && person.getAge() >= 18)){
+                if(person.chanceOfDeath(year) || (person.getMoney() < 0 && person.getAge() >= 18)){
                     peopleDead ++;
                     itemsToRemove.add(person);
 
@@ -81,20 +75,16 @@ public class Earth4 {
             population.addAll(itemsToAdd);
 
             if(year % 50 == 0){
+                BigInteger mph = worldMoney.divide(BigInteger.valueOf(population.size()));
                 System.out.println();
                 System.out.println("Year: " + year);
                 System.out.println("People Born: " + peopleBorn);
                 System.out.println("People Dead: " + peopleDead);
                 System.out.println("Total Population: " + population.size());
                 System.out.println("World Money: " + worldMoney);
-            }//else {
-               // System.out.println("Year: " + year);
-            //}
-//            try{
-//                Thread.sleep(1000);
-//            }catch (InterruptedException e){
-//                e.printStackTrace();
-//            }
+                System.out.println("Average money per head: " + mph);
+            }
+
             year++;
             peopleBorn = 0;
             peopleDead = 0;

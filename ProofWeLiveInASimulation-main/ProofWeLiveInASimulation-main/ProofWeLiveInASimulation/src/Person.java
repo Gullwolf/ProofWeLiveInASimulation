@@ -9,6 +9,8 @@ public class Person {
     int yearBorn;
     boolean pregnant;
 
+    int deathYear = -1;
+
     int money;
 
     Person(int yearBorn){
@@ -40,6 +42,7 @@ public class Person {
     public void payBills(){
         this.money -= 26062/2;
     }
+
 
 
     private void chooseName(){
@@ -95,7 +98,7 @@ public class Person {
         }
     }
 
-    public boolean chanceOfDeath(){
+    public boolean chanceOfDeath(int currentYear){
         double death = 0, deathPercentage, percentage;
 
         if(this.sex == 'M') {
@@ -150,12 +153,10 @@ public class Person {
         }
 
         Random rand = new Random();
-
-
         percentage = rand.nextDouble();
         deathPercentage = (death / 100);
 
-        if(percentage <= deathPercentage){
+        if(percentage <= deathPercentage || deathYear == currentYear){
             return true;
         }
         else{
@@ -192,6 +193,27 @@ public class Person {
 
     public void giveBirth(){
         this.pregnant = false;
+    }
+
+    public void chanceOfFatalCancer(int currentYear){
+        double death, deathPercentage, percentage;
+
+        Random rand = new Random();
+
+        if(this.sex == 'M'){
+            death = 1.81;
+        }else{
+            death = 1.52;
+        }
+
+        percentage = rand.nextDouble();
+        deathPercentage = (death / 100);
+
+        if(percentage <= deathPercentage){
+            this.deathYear = currentYear + 1;
+        }
+
+
     }
 
 }

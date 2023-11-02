@@ -49,7 +49,7 @@ public class Earth {
             }
 
             for(int i = 0; i < totalPopulation; i++){
-                if(population[i].chanceOfDeath() == true){
+                if(population[i].chanceOfDeath(year) == true){
                     peopleDead ++;
                     if(i == totalPopulation-1){
                         population[i] = null;

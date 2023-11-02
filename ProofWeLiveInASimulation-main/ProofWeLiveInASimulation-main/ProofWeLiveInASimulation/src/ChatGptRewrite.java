@@ -39,7 +39,7 @@ public class ChatGptRewrite {
                     peopleBorn++;
                 }
 
-                if (person1.chanceOfDeath() || (person1.getMoney() < 0 && person1.getAge() >= 18)) {
+                if (person1.chanceOfDeath(year) || (person1.getMoney() < 0 && person1.getAge() >= 18)) {
                     peopleDead++;
                     population.remove(i);
                     i--;
