@@ -11,10 +11,10 @@ public class Earth5 {
         ArrayList<Person> itemsToAdd = new ArrayList<>();
         Random rand = new Random();
         int year = 0;
-        int peopleBorn;
-        int peopleDead;
+        int peopleBorn = 0;
+        int peopleDead = 0;
         int startingPopulationSize;
-        BigInteger worldMoney;
+        BigInteger worldMoney =  BigInteger.valueOf(0);
 
         for(int s = 0; s <= 1; s++){
             Person person = new Person(year);
@@ -27,15 +27,9 @@ public class Earth5 {
             System.out.println(value.name + " age: " + value.age + " sex: " + value.sex + " year born: " + value.yearBorn);
         }
 
+        startingPopulationSize = population.size();
 
         do{
-            itemsToRemove.clear();
-            itemsToAdd.clear();
-            peopleBorn = 0;
-            peopleDead = 0;
-
-            startingPopulationSize = population.size();
-            worldMoney = BigInteger.valueOf(0);
 
             for (Person person : population) {
 
@@ -90,6 +84,11 @@ public class Earth5 {
             year++;
             peopleBorn = 0;
             peopleDead = 0;
+            itemsToRemove.clear();
+            itemsToAdd.clear();
+            startingPopulationSize = population.size();
+            worldMoney = BigInteger.valueOf(0);
+
         } while (population.size() != 0);
 
         System.out.println();

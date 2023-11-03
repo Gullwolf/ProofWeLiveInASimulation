@@ -1,4 +1,3 @@
-import java.math.BigInteger;
 import java.util.Random;
 
 public class Person {
@@ -170,7 +169,7 @@ public class Person {
 
         if(this.sex != partnerSex) {
             if(this.pregnant == false || isPregnant == false) {//Multiple children check
-                if (this.age >= 18 && partnerAge >= 18) {
+                if (this.age >= 18 && this.age <= 50 && partnerAge >= 18 && partnerAge <= 50) {
                     Random rand = new Random();
                     chanceOfConservation = rand.nextInt(100);
                     if (chanceOfConservation <= 41) {
