@@ -1,10 +1,11 @@
-import java.math.BigInteger;
+//import java.math.BigInteger;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Earth5 {
-    
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
 
         ArrayList<Person> population = new ArrayList<>();
         ArrayList<Person> itemsToRemove = new ArrayList<>();
@@ -14,43 +15,49 @@ public class Earth5 {
         int peopleBorn = 0;
         int peopleDead = 0;
         int startingPopulationSize;
-        BigInteger worldMoney =  BigInteger.valueOf(0);
+//        BigInteger worldMoney =  BigInteger.valueOf(0);
 
-        for(int s = 0; s <= 1; s++){
-            Person person = new Person(year);
+        for (int s = 0; s <= 1; s++) {
+            Person person;
+            if (s == 0) {
+                person = new Person(year, 'M');
+            } else {
+                person = new Person(year, 'F');
+            }
             population.add(person);
+
 
         }
 
         System.out.println("Starting State:");
         for (Person value : population) {
-            System.out.println(value.name + " age: " + value.age + " sex: " + value.sex + " year born: " + value.yearBorn);
+            System.out.println(value.getName() + " age: " + value.getAge() + " sex: " + value.getSex() + " year born: " + value.getYearBorn());
         }
 
         startingPopulationSize = population.size();
 
-        do{
+        do {
 
             for (Person person : population) {
 
                 Person person2 = population.get(rand.nextInt(startingPopulationSize));
 
-                if (person.haveAChild(person2.age, person2.sex, person2.pregnant, person2.numberOfChildren, year, person2.lastChild)) {
+                if (person.haveAChild(person2.getAge(), person2.getSex(), person2.isPregnant(), person2.getNumberOfChildren(), year, person2.getLastChild())) {
                     person.becomePregnant(year);
                     person2.becomePregnant(year);
                     Person child = new Person(year);
                     itemsToAdd.add(child);
-                    peopleBorn ++;
+                    peopleBorn++;
                 }
 
                 person.chanceOfFatalCancer(year);
 
-                if(person.chanceOfDeath(year) || (person.getMoney() < 0 && person.getAge() >= 18)){
-                    peopleDead ++;
+                if (person.chanceOfDeath(year) || (person.getMoney() < 0 && person.getAge() >= 18)) {
+                    peopleDead++;
                     itemsToRemove.add(person);
 
                 }
-                person.haveABirthday();
+
                 if (person.getAge() < 18) {
                     int range = (10000);
                     person.getPaid(rand.nextInt(range));
@@ -59,26 +66,28 @@ public class Earth5 {
                     person.getPaid(rand.nextInt(range));
                     person.payBills();
                 }
-
-                worldMoney = worldMoney.add(BigInteger.valueOf(person.getMoney()));
+                person.haveABirthday();
 
                 if (person.sex == 'F') {
                     person.giveBirth();
                 }
+/*
+                if(year % 50 == 0){
+                    worldMoney = worldMoney.add(BigInteger.valueOf(person.getMoney()));
+                }
+*/
             }
 
             population.removeAll(itemsToRemove);
             population.addAll(itemsToAdd);
 
-            if(year % 50 == 0){
-                BigInteger mph = worldMoney.divide(BigInteger.valueOf(population.size()));
-                System.out.println();
-                System.out.println("Year: " + year);
-                System.out.println("People Born: " + peopleBorn);
-                System.out.println("People Dead: " + peopleDead);
-                System.out.println("Total Population: " + population.size());
+            if (year % 50 == 0) {
+//                BigInteger mph = worldMoney.divide(BigInteger.valueOf(population.size()));
+                System.out.printf("\nYear: %d\nPeople Born: %d\nPeople Dead: %d\nTotal Population: %d%n", year, peopleBorn, peopleDead, population.size());
+/*
                 System.out.println("World Money: " + worldMoney);
                 System.out.println("Average money per head: " + mph);
+*/
             }
 
             year++;
@@ -87,17 +96,13 @@ public class Earth5 {
             itemsToRemove.clear();
             itemsToAdd.clear();
             startingPopulationSize = population.size();
-            worldMoney = BigInteger.valueOf(0);
+//            worldMoney = BigInteger.valueOf(0);
 
         } while (population.size() != 0);
 
-        System.out.println();
-        System.out.println("Year: " + year);
-        System.out.println("People Born: " + peopleBorn);
-        System.out.println("People Dead: " + peopleDead);
-        System.out.println("Total Population: " + population.size());
+        System.out.printf("\nYear: %d\nPeople Born: %d\nPeople Dead: %d\nTotal Population: %d%n", year, peopleBorn, peopleDead, population.size());
 
-        
+
     }
-    
+
 }

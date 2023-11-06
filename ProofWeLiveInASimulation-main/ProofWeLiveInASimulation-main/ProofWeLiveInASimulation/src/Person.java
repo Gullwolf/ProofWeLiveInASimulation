@@ -16,12 +16,24 @@ public class Person {
 
     int lastChild;
 
-    Person(int yearBorn){
+    Person(int yearBorn) {
         chooseSex();
         chooseName();
         this.age = 0;
         this.yearBorn = yearBorn;
-        if(this.sex == 'M'){
+        if (this.sex == 'M') {
+            pregnant = true;
+        }
+        this.money = 26063;
+        this.lastChild = 0;
+        this.numberOfChildren = 0;
+    }
+    Person(int yearBorn, char sex) {
+        this.sex = sex;
+        chooseName();
+        this.age = 0;
+        this.yearBorn = yearBorn;
+        if (this.sex == 'M') {
             pregnant = true;
         }
         this.money = 26063;
@@ -29,35 +41,99 @@ public class Person {
         this.numberOfChildren = 0;
     }
 
-    public void haveABirthday(){
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSex(char sex) {
+        this.sex = sex;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getYearBorn() {
+        return yearBorn;
+    }
+
+    public void setYearBorn(int yearBorn) {
+        this.yearBorn = yearBorn;
+    }
+
+    public boolean isPregnant() {
+        return pregnant;
+    }
+
+    public void setPregnant(boolean pregnant) {
+        this.pregnant = pregnant;
+    }
+
+    public int getDeathYear() {
+        return deathYear;
+    }
+
+    public void setDeathYear(int deathYear) {
+        this.deathYear = deathYear;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
+    public int getNumberOfChildren() {
+        return numberOfChildren;
+    }
+
+    public void setNumberOfChildren(int numberOfChildren) {
+        this.numberOfChildren = numberOfChildren;
+    }
+
+    public int getLastChild() {
+        return lastChild;
+    }
+
+    public void setLastChild(int lastChild) {
+        this.lastChild = lastChild;
+    }
+
+    public void haveABirthday() {
         age += 1;
     }
 
-    public int getAge(){
-        return age;
-    }
-    public int getMoney(){
-        return money;
+    public int getAge() {
+        return this.age;
     }
 
-    public void getPaid(int salary){
+    public char getSex() {
+        return this.sex;
+    }
+
+    public int getMoney() {
+        return this.money;
+    }
+
+    public void getPaid(int salary) {
         this.money += salary;
     }
 
-    public void payBills(){
-        this.money -= 26062/2;
+    public void payBills() {
+        this.money -= 26062 / 2;
     }
 
 
-
-    private void chooseName(){
+    private void chooseName() {
         int choice;
 
         Random rand = new Random();
         choice = rand.nextInt(3);
         //System.out.println(choice);
 
-        if(this.sex == 'M') {
+        if (this.sex == 'M') {
             switch (choice) {
                 case 0:
                     this.name = "Paul";
@@ -70,8 +146,7 @@ public class Person {
                     break;
 
             }
-        }
-        else if(this.sex == 'F'){
+        } else if (this.sex == 'F') {
             switch (choice) {
                 case 0:
                     this.name = "Lucy";
@@ -87,13 +162,13 @@ public class Person {
         }
     }
 
-    private void chooseSex(){
+    private void chooseSex() {
         int choice;
 
         Random rand = new Random();
         choice = rand.nextInt(2);
 
-        switch (choice){
+        switch (choice) {
             case 0:
                 this.sex = 'M';
                 break;
@@ -103,10 +178,10 @@ public class Person {
         }
     }
 
-    public boolean chanceOfDeath(int currentYear){
+    public boolean chanceOfDeath(int currentYear) {
         double death = 0, deathPercentage, percentage;
 
-        if(this.sex == 'M') {
+        if (this.sex == 'M') {
             if (age < 1) {
                 death = 0.56;
             } else if (age >= 1 && age <= 4) {
@@ -130,8 +205,7 @@ public class Person {
             } else if (age >= 85) {
                 death = 17;
             }
-        }
-        else if(this.sex == 'F'){
+        } else if (this.sex == 'F') {
             if (age < 1) {
                 death = 0.44;
             } else if (age >= 1 && age <= 4) {
@@ -161,20 +235,19 @@ public class Person {
         percentage = rand.nextDouble();
         deathPercentage = (death / 100);
 
-        if(percentage <= deathPercentage || deathYear == currentYear){
+        if (percentage <= deathPercentage || deathYear == currentYear) {
             return true;
-        }
-        else{
+        } else {
             return false;
         }
 
     }
 
-    public boolean haveAChild(int partnerAge, char partnerSex, boolean isPregnant, int partnerNumberOfChildren, int year, int partnerLastChild){
+    public boolean haveAChild(int partnerAge, char partnerSex, boolean isPregnant, int partnerNumberOfChildren, int year, int partnerLastChild) {
         int chanceOfConservation;
 
-        if(this.sex != partnerSex) {
-            if((this.pregnant == false || isPregnant == false) && /*(this.numberOfChildren <=3 && partnerNumberOfChildren <=3) &&*/ (this.lastChild != year && partnerLastChild != year)) {//Multiple children check
+        if (this.sex != partnerSex) {
+            if ((this.pregnant == false || isPregnant == false) && /*(this.numberOfChildren <=3 && partnerNumberOfChildren <=3) &&*/ (this.lastChild != year && partnerLastChild != year)) {//Multiple children check
                 if (this.age >= 18 && this.age <= 50 && partnerAge >= 18 && partnerAge <= 50) {
                     Random rand = new Random();
                     chanceOfConservation = rand.nextInt(100);
@@ -190,36 +263,36 @@ public class Person {
         return false;
     }
 
-    public void becomePregnant(int year){
+    public void becomePregnant(int year) {
         //lastChild = year;
-        if(this.sex == 'F'){
+        if (this.sex == 'F') {
             this.pregnant = true;
             lastChild = year;
         }
     }
 
-    public void giveBirth(){
+    public void giveBirth() {
         this.pregnant = false;
         numberOfChildren = numberOfChildren + 1;
     }
 
-    public void chanceOfFatalCancer(int currentYear){
+    public void chanceOfFatalCancer(int currentYear) {
         double death, deathPercentage, percentage;
 
         Random rand = new Random();
 
-        if(this.sex == 'M'){
+        if (this.sex == 'M') {
             death = 1.81;
-        }else{
+        } else {
             death = 1.52;
         }
 
         percentage = rand.nextDouble();
         deathPercentage = (death / 100);
 
-        if((percentage <= deathPercentage) && (this.age >= 18)){
+        if ((percentage <= deathPercentage) && (this.age >= 18)) {
             this.deathYear = currentYear + 1;
-        }else if ((percentage <= (deathPercentage/2)) && (this.age < 18)){
+        } else if ((percentage <= (deathPercentage / 2)) && (this.age < 18)) {
             this.deathYear = currentYear + 1;
         }
 
