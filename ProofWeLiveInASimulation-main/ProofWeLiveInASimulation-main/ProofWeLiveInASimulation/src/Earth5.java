@@ -35,9 +35,9 @@ public class Earth5 {
 
                 Person person2 = population.get(rand.nextInt(startingPopulationSize));
 
-                if (person.haveAChild(person2.age, person2.sex, person2.pregnant)) {
-                    person.becomePregnant();
-                    person2.becomePregnant();
+                if (person.haveAChild(person2.age, person2.sex, person2.pregnant, person2.numberOfChildren, year, person2.lastChild)) {
+                    person.becomePregnant(year);
+                    person2.becomePregnant(year);
                     Person child = new Person(year);
                     itemsToAdd.add(child);
                     peopleBorn ++;

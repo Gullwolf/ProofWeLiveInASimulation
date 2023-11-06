@@ -12,6 +12,10 @@ public class Person {
 
     int money;
 
+    int numberOfChildren;
+
+    int lastChild;
+
     Person(int yearBorn){
         chooseSex();
         chooseName();
@@ -21,6 +25,8 @@ public class Person {
             pregnant = true;
         }
         this.money = 26063;
+        this.lastChild = 0;
+        this.numberOfChildren = 0;
     }
 
     public void haveABirthday(){
@@ -164,11 +170,11 @@ public class Person {
 
     }
 
-    public boolean haveAChild(int partnerAge, char partnerSex, boolean isPregnant){
+    public boolean haveAChild(int partnerAge, char partnerSex, boolean isPregnant, int partnerNumberOfChildren, int year, int partnerLastChild){
         int chanceOfConservation;
 
         if(this.sex != partnerSex) {
-            if(this.pregnant == false || isPregnant == false) {//Multiple children check
+            if((this.pregnant == false || isPregnant == false) && /*(this.numberOfChildren <=3 && partnerNumberOfChildren <=3) &&*/ (this.lastChild != year && partnerLastChild != year)) {//Multiple children check
                 if (this.age >= 18 && this.age <= 50 && partnerAge >= 18 && partnerAge <= 50) {
                     Random rand = new Random();
                     chanceOfConservation = rand.nextInt(100);
@@ -184,14 +190,17 @@ public class Person {
         return false;
     }
 
-    public void becomePregnant(){
+    public void becomePregnant(int year){
+        //lastChild = year;
         if(this.sex == 'F'){
             this.pregnant = true;
+            lastChild = year;
         }
     }
 
     public void giveBirth(){
         this.pregnant = false;
+        numberOfChildren = numberOfChildren + 1;
     }
 
     public void chanceOfFatalCancer(int currentYear){
@@ -208,7 +217,9 @@ public class Person {
         percentage = rand.nextDouble();
         deathPercentage = (death / 100);
 
-        if(percentage <= deathPercentage){
+        if((percentage <= deathPercentage) && (this.age >= 18)){
+            this.deathYear = currentYear + 1;
+        }else if ((percentage <= (deathPercentage/2)) && (this.age < 18)){
             this.deathYear = currentYear + 1;
         }
 
